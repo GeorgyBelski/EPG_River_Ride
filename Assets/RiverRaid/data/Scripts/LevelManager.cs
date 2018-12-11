@@ -37,9 +37,9 @@ public class LevelManager : MonoBehaviour {
         }
         else
         {
-            if (playerLevelPosition > 5 && playerLevelPosition < 10)
+            if (playerLevelPosition > 3 && playerLevelPosition < 5)
             {
-                playerScript.checkPoint = new Vector3(0, 1.1f, player.transform.position.z);
+                playerScript.checkPoint = new Vector3(0, 1.1f, player.transform.position.z + (6 - playerLevelPosition));
                 levelNumber++;
                 isNextLavelLoaded = false;
                 Destroy(currentLevel);

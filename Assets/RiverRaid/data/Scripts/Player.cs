@@ -5,35 +5,44 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public float speed =10f;
     public float ctrlSpeed = 2f;
-    [Range(3, 25)]
+    [Range(3, 50)]
     public int maxFuel = 16;
     public int currentFuel;
-    [Range(0.1f, 2.0f)]
+    [Range(0.2f, 2.0f)]
     public float fuelUsingSpeed = 0.2f;
     float fuelUnit = 0f;
+
+    public static int score;
 
     public Bullet bulletPrefub;
     public Transform visualObject;
     public GameObject explosion;
+    public Vector3 checkPoint;
+
     private bool life;
     private Rigidbody rb;
-    public Vector3 checkPoint;
+
+    private float commonFuelUsingSpeed;
 
     void Start ()
     {
-        checkPoint = this.transform.position;
+        checkPoint = this.transform.position + new Vector3(0,0,2f);
         rb = GetComponent<Rigidbody>();
         life = true;
         currentFuel = maxFuel;
+        commonFuelUsingSpeed = fuelUsingSpeed;
     }
 	
 	void Update ()
     {
+        fuelUsingSpeed = commonFuelUsingSpeed;
         float control = Input.GetAxisRaw("Horizontal");
         float acceleration = Input.GetAxis("Vertical");
         transform.position += Vector3.right * Time.deltaTime * speed * control * ctrlSpeed;
         transform.position += Vector3.forward * Time.deltaTime * acceleration * ctrlSpeed;
         transform.position += transform.forward * Time.deltaTime * speed ;
+        fuelUsingSpeed += acceleration * commonFuelUsingSpeed * 0.1f;
+
 
         if (visualObject)
         {

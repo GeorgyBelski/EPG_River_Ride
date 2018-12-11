@@ -27,28 +27,34 @@ public class Bullet : MonoBehaviour {
     {
         Destroy(gameObject);
     }
-
+    /*
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Bullet OnCollisionEnter: "+ collision.gameObject);
     }
+    */
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Bullet OnTriggerEnter");
-     //   Enemy enemy = other.GetComponent<Enemy>();
-     //   ReFueling reFueling = other.GetComponentInParent<ReFueling>();
-        if (other.gameObject.layer == 9 || other.gameObject.layer == 12)
+
+
+        //   Enemy enemy = other.GetComponent<Enemy>();
+        //   ReFueling reFueling = other.GetComponentInParent<ReFueling>();
+
+        bool hitEnemy = false;
+
+        if (other.gameObject.layer == 9) {
+            Player.score++;
+            hitEnemy = true;
+        }
+
+        if (hitEnemy || other.gameObject.layer == 12)
         {
             Debug.Log("Bullet hits: " + other.gameObject);
             MakeExplosion(other.gameObject.transform);
             Destroy(other.gameObject.gameObject);
         }
-     /*   else if (reFueling)
-        {
-            MakeExplosion(reFueling.transform);
-            Destroy(reFueling.gameObject);
-        }
-          */
+
     }
     private void MakeExplosion(Transform objectTransform) {
         if (explosion)
